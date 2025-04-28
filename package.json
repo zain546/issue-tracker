@@ -16,11 +16,12 @@
     "classnames": "^2.5.1",
     "issue-tracker": "file:",
     "next": "15.3.1",
-    "prisma": "5.3.1",
+    "prisma": "6.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "tslint": "^5.20.1"
+    "tslint": "^5.20.1",
+    "zod": "3.22.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
