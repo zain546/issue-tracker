@@ -12,13 +12,19 @@ const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/validationSchemas';
 import { z } from 'zod';
+import ErrorMessage from '@/app/components/ErrorMessage';
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
   const [error, setError] = useState('');
   const router = useRouter();
-  const { register, control, handleSubmit, formState: { errors } } = useForm<IssueForm>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema),
   });
   return (
@@ -40,7 +46,7 @@ const NewIssuePage = () => {
         })}
       >
         <TextField.Root placeholder="Title" {...register('title')} />
-        {errors.title && <Text color="red" as='p'>{errors.title.message}</Text>}
+         <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           control={control}
           name="description"
@@ -48,9 +54,7 @@ const NewIssuePage = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-        {errors.description && (
-          <Text color="red" as='p' className='pb-3'>{errors.description.message}</Text>
-        )}
+          <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button>Submit New Issue</Button>
       </form>
     </div>
