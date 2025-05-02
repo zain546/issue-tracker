@@ -1,19 +1,18 @@
 'use client';
 import React, { useState } from 'react';
 import { Button, Callout, Spinner, TextField } from '@radix-ui/themes';
-import dynamic from 'next/dynamic';
 import 'easymde/dist/easymde.min.css';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
-  ssr: false,
-});
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/validationSchemas';
 import { z } from 'zod';
 import ErrorMessage from '@/app/components/ErrorMessage';
-import delay from 'delay';
+import dynamic from 'next/dynamic';
+const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+  ssr: false,
+});
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -38,8 +37,7 @@ const NewIssuePage = () => {
       setSubmitting(false);
       setError('An unexpected error occurred');
     }
-    await delay(2000)
-  })
+  });
   return (
     <div className="max-w-xl ">
       {error && (
@@ -47,10 +45,7 @@ const NewIssuePage = () => {
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form
-        className=" space-y-3"
-        onSubmit={onSubmit}
-      >
+      <form className=" space-y-3" onSubmit={onSubmit}>
         <TextField.Root placeholder="Title" {...register('title')} />
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
