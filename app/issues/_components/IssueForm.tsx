@@ -19,7 +19,7 @@ type IssueFormData = z.infer<typeof IssueSchema>;
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
   const [error, setError] = useState('');
-  const [sSubmitting, setSubmitting] = useState(false);
+  const [Submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -32,7 +32,8 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
   const onSubmit = handleSubmit(async data => {
     try {
       setSubmitting(true);
-      await axios.post('/api/issues', data);
+      if (issue) await axios.patch(`/api/issues/${issue.id}`, data);
+      else await axios.post('/api/issues', data);
       router.push('/issues');
     } catch (error) {
       setSubmitting(false);
@@ -62,8 +63,9 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button disabled={sSubmitting}>
-          Submit New Issue {sSubmitting && <Spinner />}
+        <Button disabled={Submitting}>
+          {issue ? 'Update Issue' : 'Submit New Issue'}{' '}
+          {Submitting && <Spinner />}
         </Button>
       </form>
     </div>
