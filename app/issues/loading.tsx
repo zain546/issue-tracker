@@ -1,6 +1,5 @@
 import { Table } from '@radix-ui/themes';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import { Skeleton } from '@/app/components';
 import IssuesActions from './IssuesActions';
 
 const LoadingIssuePage = () => {
@@ -24,16 +23,16 @@ const LoadingIssuePage = () => {
           {issues.map(issue => (
             <Table.Row key={issue}>
               <Table.Cell>
-                <Skeleton/>
+                <Skeleton />
                 <div className="block md:hidden text-xs">
-                <Skeleton/>
+                  <Skeleton />
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-              <Skeleton/>
+                <Skeleton />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-              <Skeleton/>
+                <Skeleton />
               </Table.Cell>
             </Table.Row>
           ))}
