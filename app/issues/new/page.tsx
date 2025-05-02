@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/validationSchemas';
 import { z } from 'zod';
 import ErrorMessage from '@/app/components/ErrorMessage';
+import delay from 'delay';
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -37,6 +38,7 @@ const NewIssuePage = () => {
       setSubmitting(false);
       setError('An unexpected error occurred');
     }
+    await delay(2000)
   })
   return (
     <div className="max-w-xl ">
