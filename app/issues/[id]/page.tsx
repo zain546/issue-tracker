@@ -3,13 +3,15 @@ import { Box, Grid } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
 import IssueDetails from './IssueDetails';
 import IssueEditButton from './IssueEditButton';
-interface Props {
-  params: { id: string };
-}
-const IssueDetailPage = async ({ params }: Props) => {
+const IssueDetailPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
   const issue = await prisma.issue.findUnique({
     where: {
-      id: Number(params.id),
+      id: Number(id),
     },
   });
   if (!issue) notFound();
