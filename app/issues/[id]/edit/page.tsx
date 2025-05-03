@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma/client';
-import IssueForm from '../../_components/IssueForm';
 import { notFound } from 'next/navigation';
+import IssueForm from '../../_components/DynamicIssueForm';
 
 const IssueEditPage = async ({
   params,
