@@ -1,17 +1,21 @@
 'use client';
+import { Spinner } from '@/app/components';
 import { AlertDialog, Button, Flex } from '@radix-ui/themes';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 const IssueDeleteButton = ({ issueId }: { issueId: number }) => {
   const [error, setError] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
   const router = useRouter();
   const deleteIssue = async () => {
     try {
+      setDeleting(true);
       await axios.delete(`/api/issues/${issueId}`);
       router.push('/issues');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
+      setDeleting(false);
       setError(true);
     }
   };
@@ -19,7 +23,10 @@ const IssueDeleteButton = ({ issueId }: { issueId: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red">Delete Issue</Button>
+          <Button color="red" disabled={isDeleting}>
+            Delete Issue
+            {isDeleting && <Spinner/>}
+          </Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content>
           <AlertDialog.Title>Confirm Delete?</AlertDialog.Title>
