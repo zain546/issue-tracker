@@ -55,6 +55,8 @@ const Navbar = () => {
                     size="2"
                     radius="full"
                     className="cursor-pointer"
+                    // optional: This is when you avatar does not load then you can set this line.  
+                    referrerPolicy='no-referrer'
                   />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
