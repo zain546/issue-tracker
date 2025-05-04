@@ -4,6 +4,7 @@ import React from 'react';
 import { FaBug } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import classnames from 'classnames';
+import { Skeleton } from '@/app/components';
 import {
   Avatar,
   Box,
@@ -58,9 +59,13 @@ const NavLinks = () => {
 };
 const AuthStatus = () => {
   const { status, data: session } = useSession();
-  if (status === 'loading') return null;
+  if (status === 'loading') return <Skeleton width={'3rem'} />;
   if (status === 'unauthenticated')
-    return <Link className='nav-link' href="/api/auth/signin">Log in</Link>;
+    return (
+      <Link className="nav-link" href="/api/auth/signin">
+        Log in
+      </Link>
+    );
   return (
     <Box>
       <DropdownMenu.Root>
