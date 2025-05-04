@@ -14,12 +14,6 @@ import {
 } from '@radix-ui/themes';
 import { useSession } from 'next-auth/react';
 const Navbar = () => {
-  const navLinks = [
-    { label: 'Dashboard', href: '/' },
-    { label: 'Issues', href: '/issues' },
-  ];
-  const currentPath = usePathname();
-  const { status, data: session } = useSession();
   return (
     <nav className="py-3 px-5 border-b border-gray-300 mb-5 ">
       <Container>
@@ -28,51 +22,9 @@ const Navbar = () => {
             <Link href="/">
               <FaBug />
             </Link>
-            <ul className="flex space-x-6">
-              {/* classnames is a library that allows you to conditionally add classes in more flexible/cleaner way */}
-              {navLinks.map(link => (
-                <li
-                  key={link.href}
-                  className={classnames({
-                    'text-zinc-900': link.href === currentPath,
-                    'text-zinc-500': link.href !== currentPath,
-                    'hover:text-zinc-800 transition-colors': true,
-                  })}
-                >
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
+            <NavLinks />
           </Flex>
-          <Box>
-            {status === 'authenticated' && (
-              <DropdownMenu.Root>
-                <DropdownMenu.Trigger>
-                  <Avatar
-                    src={session.user!.image!}
-                    fallback="?"
-                    alt={session.user!.name!}
-                    size="2"
-                    radius="full"
-                    className="cursor-pointer"
-                    // optional: This is when you avatar does not load then you can set this line.  
-                    referrerPolicy='no-referrer'
-                  />
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content>
-                  <DropdownMenu.Label>
-                    <Text size={'2'}>{session.user!.email}</Text>
-                  </DropdownMenu.Label>
-                  <DropdownMenu.Item>
-                    <Link href="/api/auth/signout">Log out</Link>
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-            )}
-            {status === 'unauthenticated' && (
-              <Link href="/api/auth/signin">Log in</Link>
-            )}
-          </Box>
+          <AuthStatus />
         </Flex>
       </Container>
     </nav>
@@ -80,3 +32,59 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const NavLinks = () => {
+  const navLinks = [
+    { label: 'Dashboard', href: '/' },
+    { label: 'Issues', href: '/issues' },
+  ];
+  const currentPath = usePathname();
+  return (
+    <ul className="flex space-x-6">
+      {/* classnames is a library that allows you to conditionally add classes in more flexible/cleaner way */}
+      {navLinks.map(link => (
+        <li
+          key={link.href}
+          className={classnames({
+            'nav-link': true,
+            '!text-zinc-900': link.href === currentPath,
+          })}
+        >
+          <Link href={link.href}>{link.label}</Link>
+        </li>
+      ))}
+    </ul>
+  );
+};
+const AuthStatus = () => {
+  const { status, data: session } = useSession();
+  if (status === 'loading') return null;
+  if (status === 'unauthenticated')
+    return <Link className='nav-link' href="/api/auth/signin">Log in</Link>;
+  return (
+    <Box>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <Avatar
+            src={session!.user!.image!}
+            fallback="?"
+            alt={session!.user!.name!}
+            size="2"
+            radius="full"
+            className="cursor-pointer"
+            // optional: This is when you avatar does not load then you can set this line.
+            referrerPolicy="no-referrer"
+          />
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          <DropdownMenu.Label>
+            <Text size={'2'}>{session!.user!.email}</Text>
+          </DropdownMenu.Label>
+          <DropdownMenu.Item>
+            <Link href="/api/auth/signout">Log out</Link>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    </Box>
+  );
+};
