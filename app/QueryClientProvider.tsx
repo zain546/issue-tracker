@@ -4,8 +4,8 @@ import {
   QueryClient,
   QueryClientProvider as ReactQueryClientProvider,
 } from '@tanstack/react-query';
+const queryClient = new QueryClient();
 const QueryClientProvider = ({ children }: PropsWithChildren) => {
-  const queryClient = new QueryClient();
   return (
     <ReactQueryClientProvider client={queryClient}>
       {children}
