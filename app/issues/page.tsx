@@ -2,9 +2,19 @@ import { prisma } from '@/prisma/client';
 import { Table } from '@radix-ui/themes';
 import { Link, IssueStatusBadge } from '@/app/components';
 import IssuesActions from './IssuesActions';
-
-const IssuePage = async () => {
-  const issues = await prisma.issue.findMany();
+import { Status } from '@prisma/client';
+interface Props {
+  searchParams: Promise<{ status: Status }>;
+}
+export default async function IssuePage({ searchParams }: Props) {
+  const status = (await searchParams).status;
+  const statuses = Object.values(Status);
+  const validateStatus = statuses.includes(status) ? status : undefined;
+  const issues = await prisma.issue.findMany({
+    where: {
+      status: validateStatus,
+    },
+  });
   return (
     <div>
       <IssuesActions />
@@ -41,6 +51,6 @@ const IssuePage = async () => {
       </Table.Root>
     </div>
   );
-};
+}
+// export const revalidate = 0; means no cache, it will revalidate every time the page is visited, it's purpose is to make sure the data is up to date when the page is visited
 export const dynamic = 'force-dynamic';
-export default IssuePage;
