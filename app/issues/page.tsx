@@ -19,10 +19,15 @@ export default async function IssuePage({ searchParams }: Props) {
   const validateStatus = statuses.includes(params.status)
     ? params.status
     : undefined;
+  const columnValues = columns.map(column => column.value);
+  const validateorderBy = columnValues.includes(params.orderBy)
+    ? { [params.orderBy]: 'asc' }
+    : undefined;
   const issues = await prisma.issue.findMany({
     where: {
       status: validateStatus,
     },
+    orderBy: validateorderBy,
   });
   return (
     <div>
@@ -39,7 +44,9 @@ export default async function IssuePage({ searchParams }: Props) {
                 >
                   {column.label}
                 </NextLink>
-                {column.value === params.orderBy && <ArrowUpIcon  className='inline'/>}
+                {column.value === params.orderBy && (
+                  <ArrowUpIcon className="inline" />
+                )}
               </Table.ColumnHeaderCell>
             ))}
           </Table.Row>
