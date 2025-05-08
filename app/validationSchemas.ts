@@ -21,6 +21,7 @@ export const PatchIssueSchema = z.object({
     .min(1, { message: 'Description is required' })
     .max(65535)
     .optional(),
+  status: z.enum(['OPEN', 'IN_PROGRESS', 'CLOSED']).optional(),
   assignedToUserId: z
     .string()
     .min(1, 'Assigned to user id is required')
