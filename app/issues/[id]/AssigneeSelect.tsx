@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import { Issue, User } from '@prisma/client';
 import { Select } from '@radix-ui/themes';
@@ -11,14 +12,16 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const { data: users, isLoading, error } = useUsers();
   if (isLoading) return <Skeleton height={'2rem'} />;
   if (error) return null;
-  const assignIssue = (userId: string) => {
-    axios
-      .patch(`/api/issues/${issue.id}`, {
-        assignedToUserId: userId === 'null' ? null : userId,
-      })
-      .catch(() => {
-        toast.error('Failed to update issue');
-      });
+  const assignIssue = async (userId: string) => {
+  try {
+      await axios
+        .patch(`/api/issues/${issue.id}`, {
+          assignedToUserId: userId === 'null' ? null : userId,
+        })
+        toast.success('Issue updated successfully');
+  } catch (error) {
+    toast.error('Failed to update issue');
+  }
   };
   return (
     <>
