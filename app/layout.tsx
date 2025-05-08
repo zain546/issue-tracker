@@ -1,4 +1,5 @@
-import { Container, Theme } from "@radix-ui/themes";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Container, Theme, ThemePanel} from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -29,8 +30,9 @@ export default function RootLayout({
         className={inter.variable}
       >
         <QueryClientProvider>
-        <AuthProvider>
+        <AuthProvider> 
       <Theme accentColor="yellow">
+        {/* <ThemePanel/> */}
         <Navbar/>
         <main className="p-5">
           <Container>
