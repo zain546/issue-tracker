@@ -1,12 +1,13 @@
 'use client';
 import { Card } from '@radix-ui/themes';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-interface Props {
+interface ValueProps {
     open: number;
     inProgress: number;
     closed: number;
   }
-const IssueChart = ({ open, inProgress, closed }: Props) => {
+const IssueChart = ( {values}: {values: ValueProps}) => {
+    const { open, inProgress, closed } = values;
     const data = [
         { label: 'Open', value: open },
         { label: 'In Progress', value: inProgress },

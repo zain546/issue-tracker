@@ -2,13 +2,14 @@ import { Status } from '@prisma/client';
 import { Badge, Card, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 
-interface Props {
+interface ValuesProps {
   open: number;
   inProgress: number;
   closed: number;
 }
 
-const IssueSummary = ({ open, inProgress, closed }: Props) => {
+const IssueSummary = ({ values }: { values: ValuesProps }) => {
+  const { open, inProgress, closed } = values;
   const issues: {
     label: string;
     value: number;
