@@ -4,12 +4,17 @@ import { Select } from '@radix-ui/themes';
 import axios from 'axios';
 import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-const UpdateIssueStatus = ({ issue }: { issue: Issue }) => {
+interface Props{
+  issue: Issue;
+  onStatusChange?: (status: Status) => void;
+}
+const UpdateIssueStatus = ({ issue, onStatusChange }:Props) => {
   const statuses = Object.values(Status);
   const updateStatus = async (status: Status) => {
     try {
       await axios.patch(`/api/issues/${issue.id}`, { status });
       toast.success('Issue updated successfully');
+      onStatusChange?.(status);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error('Failed to update issue');
