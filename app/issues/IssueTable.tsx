@@ -7,6 +7,7 @@ import { IssueStatusBadge, Link } from '../components';
 export interface IssueQuery{
     status: Status;
     orderBy: keyof Issue;
+    sortOrder?: 'asc' | 'desc';
     page: string;
     
 }
@@ -27,13 +28,19 @@ const IssueTable = async({ searchParams, issues}: Props) => {
             >
               <NextLink
                 href={{
-                  query: { ...params, orderBy: column.value },
+                  query: { ...params, orderBy: column.value,
+                    sortOrder:
+                      column.value === params.orderBy &&
+                      params.sortOrder === 'asc'
+                        ? 'desc'
+                        : 'asc',
+                   },
                 }}
               >
                 {column.label}
               </NextLink>
               {column.value === params.orderBy && (
-                <ArrowUpIcon className="inline" />
+                <ArrowUpIcon   className={`inline ${params.sortOrder === 'desc' ? 'rotate-180' : ''}`} />
               )}
             </Table.ColumnHeaderCell>
           ))}

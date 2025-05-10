@@ -14,8 +14,9 @@ export default async function IssuePage({ searchParams }: Props) {
   const validateStatus = statuses.includes(params.status)
     ? params.status
     : undefined;
+    const sortOrder = params.sortOrder === 'desc' ? 'desc' : 'asc';
   const validateorderBy = columnValues.includes(params.orderBy)
-    ? { [params.orderBy]: 'asc' }
+    ? { [params.orderBy]: sortOrder  }
     : undefined;
   const page = Number(params.page) || 1;
   const pageSize = 10;
