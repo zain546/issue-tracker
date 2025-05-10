@@ -4,6 +4,7 @@ import Pagination from '../components/Pagination';
 import IssuesActions from './IssuesActions';
 import IssueTable, { columnValues, IssueQuery } from './IssueTable';
 import { Flex } from '@radix-ui/themes';
+import { Metadata } from 'next';
 interface Props {
   searchParams: Promise<IssueQuery>;
 }
@@ -42,3 +43,8 @@ export default async function IssuePage({ searchParams }: Props) {
 }
 // export const revalidate = 0; means no cache, it will revalidate every time the page is visited, it's purpose is to make sure the data is up to date when the page is visited
 export const dynamic = 'force-dynamic';
+
+export const  metadata:Metadata  = {
+  title:"Issue Tracker - Issues",
+  description: "View all project issues"
+}
