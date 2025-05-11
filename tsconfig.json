@@ -34,6 +34,7 @@
     ]
   },
   "include": [
+    "global.d.ts",
     "types",
     "next-env.d.ts",
     "**/*.ts",
