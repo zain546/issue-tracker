@@ -32,7 +32,7 @@ export default async function IssuePage({ searchParams }: Props) {
   return (
     <Flex direction="column" gap="3">
       <IssuesActions />
-      <IssueTable searchParams={searchParams} issues={issues} />
+      { issues.length > 0 &&  <IssueTable searchParams={searchParams} issues={issues} />}
       <Pagination
         itemCount={issueCount}
         pageSize={pageSize}
